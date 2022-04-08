@@ -1,3 +1,6 @@
+This is a simple inventory manager app creatend in angular with the ability to have users and add or edit products.
+
+
 # Apm
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.8.
