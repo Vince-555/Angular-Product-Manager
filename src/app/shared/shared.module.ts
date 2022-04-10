@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 
 import { StarComponent } from './star.component';
 
+import {AuthService} from '../auth.service';
+
 @NgModule({
   imports: [
     CommonModule
@@ -15,6 +17,7 @@ import { StarComponent } from './star.component';
     StarComponent,
     CommonModule,
     FormsModule
-  ]
+  ],
+  providers : [AuthService]
 })
 export class SharedModule { }

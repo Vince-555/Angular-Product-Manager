@@ -6,5 +6,23 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  pageTitle = 'Product manager';
+  pageTitle : any;
+  token : any;
+
+  constructor( ) { }
+
+
+logOut(){
+  localStorage.clear();
+  this.ngOnInit();
 }
+
+ngOnInit() {
+  this.token = localStorage.getItem("token");
+  this.pageTitle = localStorage.getItem("name");
+  // console.log("this is token", token)
+
+}
+}
+
+

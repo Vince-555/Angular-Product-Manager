@@ -20,6 +20,7 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
   pageTitle = 'Product Edit';
   errorMessage = '';
   productForm!: FormGroup;
+  updateid: any;
 
   product!: Product;
   private sub!: Subscription;
@@ -65,16 +66,19 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
                          Validators.minLength(3),
                          Validators.maxLength(50)]],
       productCode: ['', Validators.required],
+      price: ['', Validators.required],
       starRating: ['', NumberValidators.range(1, 5)],
       tags: this.fb.array([]),
-      description: ''
+      description: '',
+      image: ''
     });
 
     // Read the product Id from the route parameter
     this.sub = this.route.paramMap.subscribe(
       params => {
-        const id = Number(this.route.snapshot.paramMap.get('id'));
-        this.getProduct(id);
+         this.updateid = Number(this.route.snapshot.paramMap.get('id'));
+        this.getProduct(this.updateid);
+        console.log("param id",)
       }
     );
   }
@@ -134,6 +138,7 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
       starRating: this.product.starRating,
       description: this.product.description
     });
+    console.log("add product", this.productForm.patchValue )
     this.productForm.setControl('tags', this.fb.array(this.product.tags || []));
   }
 
@@ -157,6 +162,8 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.productForm.dirty) {
         const p = { ...this.product, ...this.productForm.value };
 
+        console.log("ts data 1", this.updateid)
+        console.log("ts data 2", this.productForm.value )
         if (p.id === 0) {
           this.productService.createProduct(p)
             .subscribe({
@@ -167,7 +174,8 @@ export class ProductEditComponent implements OnInit, AfterViewInit, OnDestroy {
               error: err => this.errorMessage = err
             });
         } else {
-          this.productService.updateProduct(p)
+          console.log("ts data", p)
+          this.productService.updateProduct(this.updateid, this.productForm.value)
             .subscribe({
               next: () => this.onSaveComplete(),
               error: err => this.errorMessage = err

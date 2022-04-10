@@ -13,6 +13,7 @@ export class ProductListComponent implements OnInit {
   imageMargin = 2;
   showImage = false;
   errorMessage = '';
+  token: any;
 
   _listFilter = '';
   get listFilter(): string {
@@ -47,6 +48,7 @@ export class ProductListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.token = localStorage.getItem("token");
     this.productService.getProducts().subscribe({
       next: products => {
         this.products = products;

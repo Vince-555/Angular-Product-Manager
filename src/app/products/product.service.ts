@@ -14,8 +14,10 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
+
+
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.productsUrl)
+    return this.http.get<any>('http://localhost:3000/auth/product')
       .pipe(
         tap(data => console.log(JSON.stringify(data))),
         catchError(this.handleError)
@@ -26,10 +28,22 @@ export class ProductService {
     if (id === 0) {
       return of(this.initializeProduct());
     }
-    const url = `${this.productsUrl}/${id}`;
+    const url = `http://localhost:3000/auth/productById/${id}`;
     return this.http.get<Product>(url)
       .pipe(
-        tap(data => console.log('getProduct: ' + JSON.stringify(data))),
+        tap(data => console.log('getProduct: ' , JSON.stringify(data))),
+        catchError(this.handleError)
+      );
+  }
+
+  gettag(id: number): Observable<Product> {
+    if (id === 0) {
+      return of(this.initializeProduct());
+    }
+    const url = `http://localhost:3000/auth/tagById/${id}`;
+    return this.http.get<Product>(url)
+      .pipe(
+        tap(data => console.log('getProduct: ' , JSON.stringify(data))),
         catchError(this.handleError)
       );
   }
@@ -37,7 +51,7 @@ export class ProductService {
   createProduct(product: Product): Observable<Product> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     product.id = null;
-    return this.http.post<Product>(this.productsUrl, product, { headers })
+    return this.http.post<Product>('http://localhost:3000/auth/addProduct', product, { headers })
       .pipe(
         tap(data => console.log('createProduct: ' + JSON.stringify(data))),
         catchError(this.handleError)
@@ -54,9 +68,10 @@ export class ProductService {
       );
   }
 
-  updateProduct(product: Product): Observable<Product> {
+  updateProduct(id: any, product: Product): Observable<Product> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const url = `${this.productsUrl}/${product.id}`;
+    console.log("servise update",id, product)
+    const url = `http://localhost:3000/auth/updateProduct/${id}`;
     return this.http.put<Product>(url, product, { headers })
       .pipe(
         tap(() => console.log('updateProduct: ' + product.id)),

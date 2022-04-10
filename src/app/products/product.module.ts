@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 
 // Imports for loading & configuring the in-memory web api
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+// import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { ProductData } from './product-data';
 
 import { ProductListComponent } from './product-list.component';
@@ -13,11 +13,13 @@ import { ProductDetailComponent } from './product-detail.component';
 import { ProductEditComponent } from './product-edit.component';
 import { ProductEditGuard } from './product-edit.guard';
 
+import {AuthService} from '../auth.service';
+
 @NgModule({
   imports: [
     SharedModule,
     ReactiveFormsModule,
-    InMemoryWebApiModule.forRoot(ProductData),
+    // InMemoryWebApiModule.forRoot(ProductData),
     RouterModule.forChild([
       { path: 'products', component: ProductListComponent },
       { path: 'products/:id', component: ProductDetailComponent },
@@ -32,6 +34,7 @@ import { ProductEditGuard } from './product-edit.guard';
     ProductListComponent,
     ProductDetailComponent,
     ProductEditComponent
-  ]
+  ],
+  providers : [AuthService]
 })
 export class ProductModule { }
