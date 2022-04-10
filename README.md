@@ -1,5 +1,17 @@
 This is a simple inventory manager app creatend in angular with the ability to have users and add or edit products.
 
+How to set up node server which is required as a backend for this project:
+1. Install xammp app and run it.
+2. In xammp app start Apache and MySql
+3. Open myAdmin http://localhost/phpmyadmin/
+4. Create new db with the name nodejs-login
+5. Import the file nodejs-login.db found in the Node_server_for_Product_Manager repo
+6. Run a cmd in the node server directory and type npm-install (make sure you have node.js installed beforehand)
+7. Now type npm install --global nodemon.
+8. Type nodemon app.js this will start the server.
+9. Open another cmd in the angular project folder and type ng serve.
+10. Enjoy !
+
 
 # Apm
 
